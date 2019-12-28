@@ -1,4 +1,4 @@
-# Go compiler Docker Container
+# Go 1.13.5 compiler Docker Container
 
 For for compiling **go** ([golang](https://golang.org/)) based applications using Docker.
 
