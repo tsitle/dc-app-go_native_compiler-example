@@ -1,8 +1,15 @@
 /mpapp/*
 !/mpapp/build-mailslurper.sh
+!/mpapp/bin/
+/mpapp/bin/*
 !/mpapp/bin/do_not_remove
+!/mpapp/pkg/
+/mpapp/pkg/*
 !/mpapp/pkg/do_not_remove
+!/mpapp/src/
+/mpapp/src/*
 !/mpapp/src/do_not_remove
+
 
 # =========================
 # IDE Files
