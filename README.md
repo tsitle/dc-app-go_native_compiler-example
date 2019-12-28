@@ -1,4 +1,4 @@
-# Go 1.13.5 compiler Docker Container
+# Go 1.13.5 compiler Docker Container for AARCH64, ARMv7l, X86 and X64
 
 For for compiling **go** ([golang](https://golang.org/)) based applications using Docker.
 
