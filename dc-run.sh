@@ -101,10 +101,45 @@ fi
 
 # ----------------------------------------------------------
 
+LVAR_REPO_PREFIX="tsle"
+LVAR_IMAGE_NAME="app-go_native_compiler-$(_getCpuArch debian_dist)"
 LVAR_GOLANG_VER="1.13.5"
+
+LVAR_IMG_FULL="${LVAR_IMAGE_NAME}:${LVAR_GOLANG_VER}"
+
+# ----------------------------------------------------------
+
+# @param string $1 Docker Image name
+# @param string $2 optional: Docker Image version
+#
+# @returns int If Docker Image exists 0, otherwise 1
+function _getDoesDockerImageExist() {
+	local TMP_SEARCH="$1"
+	[ -n "$2" ] && TMP_SEARCH="$TMP_SEARCH:$2"
+	local TMP_AWK="$(echo -n "$1" | sed -e 's/\//\\\//g')"
+	#echo "  checking '$TMP_SEARCH'"
+	local TMP_IMGID="$(docker image ls "$TMP_SEARCH" | awk '/^'$TMP_AWK' / { print $3 }')"
+	[ -n "$TMP_IMGID" ] && return 0 || return 1
+}
+
+_getDoesDockerImageExist "$LVAR_IMAGE_NAME" "$LVAR_GOLANG_VER"
+if [ $? -ne 0 ]; then
+	LVAR_IMG_FULL="${LVAR_REPO_PREFIX}/$LVAR_IMG_FULL"
+	_getDoesDockerImageExist "${LVAR_REPO_PREFIX}/${LVAR_IMAGE_NAME}" "$LVAR_GOLANG_VER"
+	if [ $? -ne 0 ]; then
+		echo "$VAR_MYNAME: Trying to pull image from repository '${LVAR_REPO_PREFIX}/'..."
+		docker pull ${LVAR_IMG_FULL}
+		if [ $? -ne 0 ]; then
+			echo "$VAR_MYNAME: Error: could not pull image '${LVAR_IMG_FULL}'. Aborting." >/dev/stderr
+			exit 1
+		fi
+	fi
+fi
+
+# ----------------------------------------------------------
 
 docker run \
 		--rm \
 		-v "$VAR_MYDIR/mpapp":"/root/app" \
-		app-go_native_compiler-$(_getCpuArch debian_dist):$LVAR_GOLANG_VER \
+		$LVAR_IMG_FULL \
 		$@
