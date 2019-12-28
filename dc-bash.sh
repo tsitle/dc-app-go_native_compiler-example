@@ -55,10 +55,16 @@ function _getCpuArch() {
 		x86_64*)
 			echo -n "amd64"
 			;;
+		i686*)
+			if [ "$1" = "debian_dist" ]; then
+				echo -n "i386"
+			else
+				echo "$VAR_MYNAME: Error: invalid arg '$1'" >/dev/stderr
+				return 1
+			fi
+			;;
 		aarch64*)
-			if [ "$1" = "debian_rootfs" ]; then
-				echo -n "arm64v8"
-			elif [ "$1" = "debian_dist" ]; then
+			if [ "$1" = "debian_dist" ]; then
 				echo -n "arm64"
 			else
 				echo "$VAR_MYNAME: Error: invalid arg '$1'" >/dev/stderr
@@ -66,9 +72,7 @@ function _getCpuArch() {
 			fi
 			;;
 		armv7*)
-			if [ "$1" = "debian_rootfs" ]; then
-				echo -n "arm32v7"
-			elif [ "$1" = "debian_dist" ]; then
+			if [ "$1" = "debian_dist" ]; then
 				echo -n "armhf"
 			else
 				echo "$VAR_MYNAME: Error: invalid arg '$1'" >/dev/stderr
