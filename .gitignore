@@ -1,4 +1,5 @@
 /mpapp/*
+!/mpapp/build-mailhog.sh
 !/mpapp/build-mailslurper.sh
 !/mpapp/bin/
 /mpapp/bin/*
