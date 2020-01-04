@@ -7,7 +7,7 @@ TMP_CWD="$(pwd)"
 	exit 1
 }
 
-TMP_MH_VERS="master"
+TMP_MH_VERS="head"
 
 echo -e "\n- cd src\n"
 cd src || exit 1
