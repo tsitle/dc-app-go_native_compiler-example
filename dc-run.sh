@@ -91,7 +91,7 @@ _getCpuArch debian_dist >/dev/null || exit 1
 
 # ----------------------------------------------------------
 
-printUsageAndExit() {
+function printUsageAndExit() {
 	echo "Usage: $VAR_MYNAME <COMMAND> ..." >/dev/stderr
 	echo "Example: $VAR_MYNAME ./build.sh" >/dev/stderr
 	exit 1
